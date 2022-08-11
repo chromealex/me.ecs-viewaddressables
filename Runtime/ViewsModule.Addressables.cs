@@ -12,7 +12,7 @@ namespace ME.ECS {
         #if INLINE_METHODS
         [System.Runtime.CompilerServices.MethodImplAttribute(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
         #endif
-        public static ViewId RegisterViewSource<TProvider>(this ViewsModule viewsModule, TProvider providerInitializer, UnityEngine.AddressableAssets.AssetReference addressablePrefab) where TProvider : struct, IViewsProviderInitializer {
+        public static ViewId RegisterViewSource<TProvider>(this ViewsModule viewsModule, TProvider providerInitializer, UnityEngine.AddressableAssets.AssetReference addressablePrefab, ViewId customId = default) where TProvider : struct, IViewsProviderInitializer {
 
             if (addressablePrefab == null) {
 
@@ -30,7 +30,7 @@ namespace ME.ECS {
 
             var handle = addressablePrefab.LoadAssetAsync<IView>();
             var prefab = handle.WaitForCompletion();
-            return viewsModule.RegisterViewSource(providerInitializer, prefab);
+            return viewsModule.RegisterViewSource(providerInitializer, prefab, customId);
 
         }
 
