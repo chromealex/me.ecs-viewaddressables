@@ -1,6 +1,6 @@
 {
   "name": "com.me.ecs.addons.viewaddressables",
-  "version": "1.0.1",
+  "version": "1.0.13",
   "displayName": "ME.ECS Addon View Addressables",
   "description": "ME.ECS Addon View Addressables Package.",
   "unity": "2020.3",

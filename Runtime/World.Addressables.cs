@@ -9,26 +9,28 @@ namespace ME.ECS {
     using Views.Providers;
 
     public static class WorldAddressables {
-
+        
         #if INLINE_METHODS
         [System.Runtime.CompilerServices.MethodImplAttribute(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
         #endif
-        public static ViewId RegisterViewSource(this World world, UnityEngine.AddressableAssets.AssetReference prefab) {
-
-            return world.RegisterViewSource(new UnityGameObjectProviderInitializer(), prefab);
-
-        }
-
-        #if INLINE_METHODS
-        [System.Runtime.CompilerServices.MethodImplAttribute(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-        #endif
-        public static ViewId RegisterViewSource<TProvider>(this World world, TProvider providerInitializer, UnityEngine.AddressableAssets.AssetReference prefab) where TProvider : struct, IViewsProviderInitializer {
+        public static ViewId RegisterViewSource<T>(this World world, UnityEngine.AddressableAssets.AssetReferenceT<T> addressablePrefab, ViewId customId = default) where T : UnityEngine.Object {
 
             var viewsModule = world.GetModule<ViewsModule>();
-            return viewsModule.RegisterViewSource(providerInitializer, prefab);
+            return viewsModule.RegisterViewSource(addressablePrefab, customId);
 
         }
 
+        #if INLINE_METHODS
+        [System.Runtime.CompilerServices.MethodImplAttribute(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+        #endif
+        public static ViewId RegisterViewSource<TProvider>(this World world, UnityEngine.AddressableAssets.AssetReference addressablePrefab, ViewId customId = default)
+            where TProvider : struct, IViewsProviderInitializer {
+            
+            var viewsModule = world.GetModule<ViewsModule>();
+            return viewsModule.RegisterViewSource<TProvider>(addressablePrefab, customId);
+
+        }
+        
     }
 
 }
